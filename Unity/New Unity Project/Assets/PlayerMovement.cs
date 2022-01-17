@@ -19,6 +19,7 @@ float runSpeed = 40f;
             if(Input.GetButtonDown("Jump"))
 {
 jump = true;
+animator.SetBool("IsJumping",true);
 }
             if(Input.GetButtonDown("Crouch"))
 {
@@ -28,6 +29,16 @@ else if (Input.GetButtonUp("Crouch"))
 {
   crouch = false;  
 }
+    }
+
+
+  public void OnCrouching(bool isCrouching)
+  {
+animator.SetBool("IsCrouching", isCrouching);
+  }
+    public void OnLanding()
+    {
+animator.SetBool("ISJumping", false);
     }
     void FixedUpdate ()
     {
