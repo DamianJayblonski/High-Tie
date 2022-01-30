@@ -897,8 +897,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.2280665, y: 3.2265506}
-  m_Size: {x: 1.3238353, y: 3.7004976}
+  m_Offset: {x: -0.2280665, y: 4.0439653}
+  m_Size: {x: 1.3238353, y: 5.335327}
   m_Direction: 0
 --- !u!61 &597931760
 BoxCollider2D:
@@ -913,7 +913,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.2596215, y: 6.593564}
+  m_Offset: {x: -0.508359, y: 7.4673524}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -924,7 +924,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3776314, y: 2.9635944}
+  m_Size: {x: 1.4717482, y: 1.2160177}
   m_EdgeRadius: 0
 --- !u!50 &597931761
 Rigidbody2D:
@@ -961,6 +961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_JumpForce: 400
   m_CrouchSpeed: 0.36
+  m_SprintSpeed: 2
   m_MovementSmoothing: 0.05
   m_AirControl: 1
   m_WhatIsGround:
@@ -999,6 +1000,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnSprintEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &597931763
 Animator:
   serializedVersion: 3
@@ -1379,7 +1383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935331093}
   m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05499983, y: 0.45000076, z: -0.8295676}
+  m_LocalPosition: {x: -0.05499983, y: 0.456, z: -0.8295676}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 698822005}
