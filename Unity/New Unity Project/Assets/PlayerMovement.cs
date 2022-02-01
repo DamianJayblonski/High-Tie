@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -33,10 +34,12 @@ else if (Input.GetButtonUp("Crouch"))
 if(Input.GetButtonDown("Sprint"))
 {
 sprint = true;
+animator.SetBool("IsSprinting",true);
 }
 else if (Input.GetButtonUp("Sprint"))
 {
-  sprint = false;  
+  sprint = false;
+  animator.SetBool("IsSprinting",false);  
 }
     }
 
@@ -45,14 +48,15 @@ else if (Input.GetButtonUp("Sprint"))
   {
 animator.SetBool("IsCrouching", isCrouching);
   }
+
     public void OnLanding()
     {
 animator.SetBool("IsJumping", false);
     }
-    public void OnSprinting(bool isSprinting)
-  {
-animator.SetBool("IsSprinting", isSprinting);
-  }
+//     public void OnSprinting(bool isSprinting)
+//   {
+// animator.SetBool("IsSprinting", isSprinting);
+//   }
     void FixedUpdate ()
     {
         {
