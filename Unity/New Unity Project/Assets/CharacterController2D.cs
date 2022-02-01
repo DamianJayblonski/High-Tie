@@ -1,6 +1,8 @@
-
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -13,6 +15,10 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform m_CeilingCheck;							// A position marking where to check for ceilings
 	[SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
+
+	[SerializeField] private CapsuleCollider2D m_CapsuleCollider;
+
+	// private Vector4 antiWallJump = new Vector4(0.2f, 0, 0);
 
 	const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
@@ -56,16 +62,36 @@ public class CharacterController2D : MonoBehaviour
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-		for (int i = 0; i < colliders.Length; i++)
-		{
-			if (colliders[i].gameObject != gameObject)
-			{
-				m_Grounded = true;
-				if (!wasGrounded)
-					OnLandEvent.Invoke();
-			}
+
+
+
+		// Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+		// for (int i = 0; i < colliders.Length; i++)
+		// {
+		// 	if (colliders[i].gameObject != gameObject)
+		// 	{
+		// 		m_Grounded = true;
+		// 		if (!wasGrounded)
+		// 			OnLandEvent.Invoke();
+		// 	}
+		// }
+
+
+ 		RaycastHit2D raycastHit2d = Physics2D.BoxCast(m_CapsuleCollider.bounds.center, m_CapsuleCollider.bounds.size, 0f, Vector2.down, .01f, m_WhatIsGround);
+        Debug.Log(raycastHit2d.collider);
+        if(raycastHit2d.collider != null){
+			m_Grounded = true;
+			if (!wasGrounded)
+			OnLandEvent.Invoke();
+			
 		}
+		// else
+		// {
+		// 	m_Grounded = false;
+		// 	OnLandEvent.Invoke();
+		// }
+		
+
 	}
 
 
@@ -156,8 +182,9 @@ public class CharacterController2D : MonoBehaviour
 		if (m_Grounded && jump)
 		{
 			// Add a vertical force to the player.
+			// m_Grounded = false;
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-			m_Grounded = false;
+			
 			
 		}
 	}
@@ -173,4 +200,6 @@ public class CharacterController2D : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
+	
+	
 }

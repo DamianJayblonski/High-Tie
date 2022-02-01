@@ -42,7 +42,7 @@ else if (Input.GetButtonUp("Sprint"))
   animator.SetBool("IsSprinting",false);  
 }
     }
-
+    
 
   public void OnCrouching(bool isCrouching)
   {
@@ -51,7 +51,10 @@ animator.SetBool("IsCrouching", isCrouching);
 
     public void OnLanding()
     {
-animator.SetBool("IsJumping", false);
+      if(jump == false)
+ {
+   animator.SetBool("IsJumping", false);
+ }
     }
 //     public void OnSprinting(bool isSprinting)
 //   {
@@ -62,6 +65,8 @@ animator.SetBool("IsJumping", false);
         {
 controller.Move(horizontalMove *Time.fixedDeltaTime, crouch, jump, sprint);
  jump = false;
+ 
+
         }
     }
 }
