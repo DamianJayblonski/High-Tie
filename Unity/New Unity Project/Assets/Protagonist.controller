@@ -688,25 +688,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: IsJumping
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: IsCrouching
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: IsSprinting
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -1276,10 +1276,10 @@ AnimatorStateMachine:
     m_Position: {x: 870, y: -20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8640242624878030343}
-    m_Position: {x: 860, y: -250, z: 0}
+    m_Position: {x: 920, y: -230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8185976728590424859}
-    m_Position: {x: 610, y: -360, z: 0}
+    m_Position: {x: 650, y: -360, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 8717923984971063936}
