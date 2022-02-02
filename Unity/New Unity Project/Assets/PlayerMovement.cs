@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     bool jump = false;
     bool crouch = false;
     bool sprint = false;
+   bool slide = false;
    
 float runSpeed = 40f;
     void Update()
@@ -41,7 +42,16 @@ else if (Input.GetButtonUp("Sprint"))
   sprint = false;
   animator.SetBool("IsSprinting",false);  
 }
-    }
+if(Input.GetButtonDown("Slide")){
+  
+
+slide = true;
+animator.SetBool("IsSlideing",true);
+StartCoroutine("stopSlide");
+ 
+}
+
+  }
     
 
   public void OnCrouching(bool isCrouching)
@@ -60,10 +70,16 @@ animator.SetBool("IsCrouching", isCrouching);
 //   {
 // animator.SetBool("IsSprinting", isSprinting);
 //   }
+
+IEnumerator stopSlide(){
+  yield return new WaitForSeconds (0.8f);
+  animator.SetBool("IsSlideing",false);
+  slide = false;
+}
     void FixedUpdate ()
     {
         {
-controller.Move(horizontalMove *Time.fixedDeltaTime, crouch, jump, sprint);
+controller.Move(horizontalMove *Time.fixedDeltaTime, crouch, jump, sprint, slide);
  jump = false;
  
 

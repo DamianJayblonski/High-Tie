@@ -9,6 +9,8 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
 	[Range(1, 3)] [SerializeField] private float m_SprintSpeed = 2f;			// Amount of maxSpeed applied to sprinting movement. 1 = 100%
+
+	[Range(1, 3)] [SerializeField] private float m_SlideSpeed = 2f;			// Amount of maxSpeed applied to sprinting movement. 1 = 100%
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
@@ -40,6 +42,9 @@ public class CharacterController2D : MonoBehaviour
 
 	public BoolEvent OnSprintEvent;
 	private bool m_wasSprinting = false;
+	public BoolEvent OnSlideEvent;
+	private bool m_wasSlideing = false;
+
 
 	private void Awake()
 	{
@@ -53,6 +58,9 @@ public class CharacterController2D : MonoBehaviour
 
 		if (OnSprintEvent == null)
 			OnSprintEvent = new BoolEvent();
+
+		if (OnSlideEvent == null)
+			OnSlideEvent = new BoolEvent();
 	}
 
 	private void FixedUpdate()
@@ -95,7 +103,7 @@ public class CharacterController2D : MonoBehaviour
 	}
 
 
-	public void Move(float move, bool crouch, bool jump, bool sprint)
+	public void Move(float move, bool crouch, bool jump, bool sprint ,bool slide)
 	{
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
@@ -106,6 +114,7 @@ public class CharacterController2D : MonoBehaviour
 				crouch = true;
 			}
 		}
+	
 
 		//only control the player if grounded or airControl is turned on
 		if (m_Grounded || m_AirControl)
@@ -126,6 +135,7 @@ public class CharacterController2D : MonoBehaviour
 				// Disable one of the colliders when crouching
 				if (m_CrouchDisableCollider != null)
 					m_CrouchDisableCollider.enabled = false;
+					
 			} else
 			{
 				// Enable the collider when not crouching
@@ -136,6 +146,28 @@ public class CharacterController2D : MonoBehaviour
 				{
 					m_wasCrouching = false;
 					OnCrouchEvent.Invoke(false);
+				}
+			}
+			// If slideing
+			if(slide)
+			{
+			if (!m_wasSlideing)
+				{
+					m_wasSlideing = true;
+					OnSlideEvent.Invoke(true);
+				}
+
+				// Increse the slide by the slideSpeed multiplier
+				move *= m_SlideSpeed;
+				if (m_CrouchDisableCollider != null)
+					m_CrouchDisableCollider.enabled = false;
+			} else
+			{
+				
+				if (m_wasSlideing)
+				{
+					m_wasSlideing = false;
+					OnSlideEvent.Invoke(false);
 				}
 			}
 			// If Sprinting
