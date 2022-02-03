@@ -20,6 +20,7 @@ public class CharacterController2D : MonoBehaviour
 
 	[SerializeField] private CapsuleCollider2D m_CapsuleCollider;
 	[SerializeField] private CapsuleCollider2D m_SlideDisableCollider;
+	[SerializeField] private CircleCollider2D m_CircleCollider;
 
 
 	// private Vector4 antiWallJump = new Vector4(0.2f, 0, 0);
@@ -87,7 +88,7 @@ public class CharacterController2D : MonoBehaviour
 		// }
 
 
- 		RaycastHit2D raycastHit2d = Physics2D.BoxCast(m_CapsuleCollider.bounds.center, m_CapsuleCollider.bounds.size, 0f, Vector2.down, .01f, m_WhatIsGround);
+ 		RaycastHit2D raycastHit2d = Physics2D.BoxCast(m_CircleCollider.bounds.center, m_CircleCollider.bounds.size, 0f, Vector2.down, .01f, m_WhatIsGround);
         Debug.Log(raycastHit2d.collider);
         if(raycastHit2d.collider != null){
 			m_Grounded = true;
@@ -95,14 +96,7 @@ public class CharacterController2D : MonoBehaviour
 			OnLandEvent.Invoke();
 			
 		}
-		raycastHit2d = Physics2D.BoxCast(m_SlideDisableCollider.bounds.center, m_SlideDisableCollider.bounds.size, 0f, Vector2.down, .01f, m_WhatIsGround);
-        Debug.Log(raycastHit2d.collider);
-        if(raycastHit2d.collider != null){
-			m_Grounded = true;
-			if (!wasGrounded)
-			OnLandEvent.Invoke();
-			
-		}
+		
 		
 		// else
 		// {
