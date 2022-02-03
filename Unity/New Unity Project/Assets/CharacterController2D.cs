@@ -19,6 +19,8 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
 
 	[SerializeField] private CapsuleCollider2D m_CapsuleCollider;
+	[SerializeField] private CapsuleCollider2D m_SlideDisableCollider;
+
 
 	// private Vector4 antiWallJump = new Vector4(0.2f, 0, 0);
 
@@ -93,6 +95,15 @@ public class CharacterController2D : MonoBehaviour
 			OnLandEvent.Invoke();
 			
 		}
+		raycastHit2d = Physics2D.BoxCast(m_SlideDisableCollider.bounds.center, m_SlideDisableCollider.bounds.size, 0f, Vector2.down, .01f, m_WhatIsGround);
+        Debug.Log(raycastHit2d.collider);
+        if(raycastHit2d.collider != null){
+			m_Grounded = true;
+			if (!wasGrounded)
+			OnLandEvent.Invoke();
+			
+		}
+		
 		// else
 		// {
 		// 	m_Grounded = false;
@@ -105,6 +116,7 @@ public class CharacterController2D : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump, bool sprint ,bool slide)
 	{
+		m_SlideDisableCollider.enabled = false;
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
 		{
@@ -160,7 +172,9 @@ public class CharacterController2D : MonoBehaviour
 				// Increse the slide by the slideSpeed multiplier
 				move *= m_SlideSpeed;
 				if (m_CrouchDisableCollider != null)
+					m_SlideDisableCollider.enabled = true;
 					m_CrouchDisableCollider.enabled = false;
+					m_CapsuleCollider.enabled = false;
 			} else
 			{
 				
@@ -168,6 +182,7 @@ public class CharacterController2D : MonoBehaviour
 				{
 					m_wasSlideing = false;
 					OnSlideEvent.Invoke(false);
+					m_CapsuleCollider.enabled = true;
 				}
 			}
 			// If Sprinting
