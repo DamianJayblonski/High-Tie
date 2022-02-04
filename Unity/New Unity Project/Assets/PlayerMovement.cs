@@ -19,10 +19,9 @@ float runSpeed = 40f;
             horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
             animator.SetFloat("Speed",Mathf.Abs(horizontalMove));
 
-if(Input.GetButtonDown("Jump"))
-{
-jump = true;
-animator.SetBool("IsJumping",true);
+if(Input.GetButtonDown("Jump")) {
+  jump = true;
+  animator.SetBool("IsJumping",true);
 }
 if(Input.GetButtonDown("Crouch"))
 {
@@ -42,7 +41,7 @@ else if (Input.GetButtonUp("Sprint"))
   sprint = false;
   animator.SetBool("IsSprinting",false);  
 }
-if(Input.GetButtonDown("Slide")){
+if(Input.GetButtonDown("Slide") && sprint == true){
   
 
 slide = true;

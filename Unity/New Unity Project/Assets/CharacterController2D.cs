@@ -21,16 +21,20 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private CapsuleCollider2D m_CapsuleCollider;
 	[SerializeField] private CapsuleCollider2D m_SlideDisableCollider;
 	[SerializeField] private CircleCollider2D m_CircleCollider;
+	// [SerializeField] private BoxCollider2D m_BoxColliderWall;
 
 
 	// private Vector4 antiWallJump = new Vector4(0.2f, 0, 0);
 
 	const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
+	private bool m_Walled;				// Whether or not the player is tuching wall.
 	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
+
+	
 
 	[Header("Events")]
 	[Space]
@@ -70,12 +74,29 @@ public class CharacterController2D : MonoBehaviour
 	{
 		bool wasGrounded = m_Grounded;
 		m_Grounded = false;
+		// bool wasWalled = m_Walled;
+		// m_Walled = false;
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
 
-
-
+ 		RaycastHit2D raycastHit2d = Physics2D.BoxCast(m_CircleCollider.bounds.center, m_CircleCollider.bounds.size, 0f, Vector2.down, .01f, m_WhatIsGround);
+        Debug.Log(raycastHit2d.collider);
+        if(raycastHit2d.collider != null){
+			m_Grounded = true;
+			if (!wasGrounded)
+			OnLandEvent.Invoke();
+			
+		}
+		// RaycastHit2D isTouchingWall = Physics2D.BoxCast(m_BoxColliderWall.bounds.center, m_BoxColliderWall.bounds.size, 0f, Vector2.right, .01f, m_WhatIsGround);
+        // Debug.Log(isTouchingWall.collider);
+        // if(isTouchingWall.collider != null){
+		// 	m_Walled = true; }
+		// 	if (!wasGrounded)
+		// 	OnLandEvent.Invoke();
+			
+		
+		
 		// Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
 		// for (int i = 0; i < colliders.Length; i++)
 		// {
@@ -87,17 +108,6 @@ public class CharacterController2D : MonoBehaviour
 		// 	}
 		// }
 
-
- 		RaycastHit2D raycastHit2d = Physics2D.BoxCast(m_CircleCollider.bounds.center, m_CircleCollider.bounds.size, 0f, Vector2.down, .01f, m_WhatIsGround);
-        Debug.Log(raycastHit2d.collider);
-        if(raycastHit2d.collider != null){
-			m_Grounded = true;
-			if (!wasGrounded)
-			OnLandEvent.Invoke();
-			
-		}
-		
-		
 		// else
 		// {
 		// 	m_Grounded = false;
@@ -118,7 +128,9 @@ public class CharacterController2D : MonoBehaviour
 			if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
 			{
 				crouch = true;
+				
 			}
+			
 		}
 	
 
