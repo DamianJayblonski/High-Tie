@@ -81,7 +81,7 @@ public class CharacterController2D : MonoBehaviour
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
 
  		RaycastHit2D raycastHit2d = Physics2D.BoxCast(m_CircleCollider.bounds.center, m_CircleCollider.bounds.size, 0f, Vector2.down, .01f, m_WhatIsGround);
-        Debug.Log(raycastHit2d.collider);
+       // Debug.Log(raycastHit2d.collider);
         if(raycastHit2d.collider != null){
 			m_Grounded = true;
 			if (!wasGrounded)
