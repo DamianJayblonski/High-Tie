@@ -167,7 +167,7 @@ public class CharacterController2D : MonoBehaviour
 				}
 			}
 			// If slideing
-			if(slide)
+			if(m_Grounded && slide)
 			{
 			if (!m_wasSlideing)
 				{
